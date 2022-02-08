@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { fulldate } from "../../utils/setDate";
 import "./header.scss";
 
 function Header({ setShowNav }) {
   const [showDropdown, setShowDropdown] = useState(false);
+
 
   return (
     <header className="Header">
@@ -15,7 +17,7 @@ function Header({ setShowNav }) {
         </button>
         <ul className="Header__nav-container">
           <li className="Header__nav-element">
-            <span className="current-date">08.feb</span>
+            <span className="current-date">{fulldate}</span>
           </li>
           <li className="Header__nav-element">
             <div className="Header__user">
