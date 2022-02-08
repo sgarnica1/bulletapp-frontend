@@ -1,18 +1,24 @@
 import React from "react";
-import { updateAthletes } from "./utils/utils";
-import { useFetch } from "./hooks/useFetch";
+// import { updateAthletes } from "./utils/utils";
+// import { useFetch } from "./hooks/useFetch";
+import { Navbar } from "./components/Navbar/Navbar";
+import { Dashboard } from "./components/Dashboard/Dashboard";
+import { Home } from "./pages/Home/Home";
 
 function App() {
-  const { data: athletes } = useFetch(
-    "http://localhost:8000/athletes",
-    updateAthletes
-  );
+  // const { data: athletes } = useFetch(
+  //   "http://localhost:8000/athletes",
+  //   updateAthletes
+  // );
 
   return (
     <div className="App">
-      <h2>Bullet App</h2>
+      <Dashboard>
+        <Navbar />
+        <Home />
+      </Dashboard>
 
-      {athletes &&
+      {/* {athletes &&
         athletes.map((athlete) => (
           <div key={athlete.id}>
             <h2>
@@ -23,7 +29,7 @@ function App() {
             <p>{athlete.plan}</p>
             <p>{athlete.schedule}</p>
           </div>
-        ))}
+        ))} */}
     </div>
   );
 }
