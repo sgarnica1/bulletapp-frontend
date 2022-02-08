@@ -1,11 +1,14 @@
-import React from "react";
+import { useState } from "react";
 // import { updateAthletes } from "./utils/utils";
 // import { useFetch } from "./hooks/useFetch";
 import { Navbar } from "./components/Navbar/Navbar";
+import { Header } from "./components/Header/Header";
 import { Dashboard } from "./components/Dashboard/Dashboard";
 import { Home } from "./pages/Home/Home";
 
 function App() {
+  const [showNav, setShowNav] = useState(false);
+
   // const { data: athletes } = useFetch(
   //   "http://localhost:8000/athletes",
   //   updateAthletes
@@ -14,7 +17,8 @@ function App() {
   return (
     <div className="App">
       <Dashboard>
-        <Navbar />
+        <Navbar showNav={showNav} setShowNav={setShowNav} />
+        <Header showNav={showNav} setShowNav={setShowNav} />
         <Home />
       </Dashboard>
 

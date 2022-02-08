@@ -1,12 +1,10 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Navitem } from "./utils/Navitem";
 import { Dropdown } from "./utils/Dropdown";
 import { DropdownElement } from "./utils/DropdownElement";
 import "./navbar.scss";
 
-function Navbar() {
-  const [showNav, setShowNav] = useState(true);
-
+function Navbar({ showNav, setShowNav }) {
   function handleClose() {
     setShowNav(false);
   }
