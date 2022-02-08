@@ -53,11 +53,24 @@
     gap: toRem(30);
   }
 
-  .current-date {
+  .current-location {
     display: none;
 
-    @include mq(md) {
-      display: inline-block;
+    @include mq(xs) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__icon {
+      width: 22px;
+      height: 22px;
+      background: url("https://images.bulletcrossfit.com/icon/location.svg");
+      @extend %icon;
+    }
+
+    &__text {
+      margin-left: 5px;
     }
   }
 

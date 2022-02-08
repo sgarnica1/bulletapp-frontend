@@ -1,10 +1,12 @@
 import "./home.scss";
+import { Banner } from "./components/Banner/Banner";
 
-function Home() {
+function Home({user}) {
   return (
-    <>
-      <div>Dashboard</div>
-    </>
+    <div className="Home">
+      <Banner user={user}/>
+      <section>Section</section>
+    </div>
   );
 }
 

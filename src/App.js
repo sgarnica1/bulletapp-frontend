@@ -8,6 +8,8 @@ import { Home } from "./pages/Home/Home";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
+  const [currentUser] = useState("Sergio");
+  const [currentLocation] = useState("Juriquilla");
 
   // const { data: athletes } = useFetch(
   //   "http://localhost:8000/athletes",
@@ -18,8 +20,12 @@ function App() {
     <div className="App">
       <Dashboard>
         <Navbar showNav={showNav} setShowNav={setShowNav} />
-        <Header showNav={showNav} setShowNav={setShowNav} />
-        <Home />
+        <Header
+          setShowNav={setShowNav}
+          user={currentUser}
+          location={currentLocation}
+        />
+        <Home user={currentUser} />
       </Dashboard>
 
       {/* {athletes &&

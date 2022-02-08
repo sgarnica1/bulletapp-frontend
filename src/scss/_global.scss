@@ -4,7 +4,6 @@
 
 // VARIABLES
 $color-primary: #4e4e4e;
-// $color-secondary: #93bb1c;
 $color-secondary: #a7d41f;
 $color-secondary-hover: #4e4e4e;
 $color-dark: #000;
@@ -57,28 +56,6 @@ $hover-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
-}
-
-%stats-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 toRem(20);
-  margin-bottom: toRem(20);
-  height: toRem(115);
-  width: 100%;
-  border-radius: 6px;
-  background-color: $color-light;
-  box-shadow: $hover-box-shadow;
-  transition: ease 0.5s;
-  transform: translateY(0px);
-  cursor: pointer;
-}
-
-%stats-card:hover {
-  transform: translateY(-5px);
-  transition: ease 0.5s;
-  box-shadow: 0px 4px 4px $color-secondary;
 }
 
 %info-card {

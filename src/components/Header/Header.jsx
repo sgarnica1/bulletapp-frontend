@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { fulldate } from "../../utils/setDate";
 import "./header.scss";
 
-function Header({ setShowNav }) {
+function Header({ setShowNav, user, location }) {
   const [showDropdown, setShowDropdown] = useState(false);
-
 
   return (
     <header className="Header">
@@ -16,8 +14,9 @@ function Header({ setShowNav }) {
           <span className="Header__toggler-icon"></span>
         </button>
         <ul className="Header__nav-container">
-          <li className="Header__nav-element">
-            <span className="current-date">{fulldate}</span>
+          <li className="Header__nav-element current-location">
+            <span className="current-location__icon"></span>
+            <p className="current-location__text">{location}</p>
           </li>
           <li className="Header__nav-element">
             <div className="Header__user">
@@ -30,7 +29,7 @@ function Header({ setShowNav }) {
                   type="button"
                   onClick={() => setShowDropdown((prevState) => !prevState)}
                 >
-                  Sergio
+                  {user}
                   <span className="dropdown__toggle-icon"></span>
                 </button>
                 <ul className={`dropdown__content ${showDropdown && "show"}`}>

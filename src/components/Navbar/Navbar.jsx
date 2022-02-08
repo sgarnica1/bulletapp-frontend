@@ -25,7 +25,7 @@ function Navbar({ showNav, setShowNav }) {
           <ul className="Navbar__navlist">
             <Navitem title={"Escritorio"} active />
             <Dropdown>
-              <DropdownElement title={"Juriquilla"} active />
+              <DropdownElement title={"Juriquilla"} active/>
               <DropdownElement title={"Zibatá"} active={false} />
               <DropdownElement title={"Grand Juriquilla"} active={false} />
             </Dropdown>
