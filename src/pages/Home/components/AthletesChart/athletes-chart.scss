@@ -1,0 +1,105 @@
+@import "../../../../scss/config";
+@import "../../../../scss/global";
+@import "../../../../scss/mixin";
+
+.AthletesChart {
+  border-radius: 6px;
+  margin-bottom: toRem(35);
+  background: $color-light;
+  height: toRem(400);
+  box-shadow: $hover-box-shadow;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $linear-gradient-header;
+    height: toRem(50);
+    padding: toRem(5) toRem(10);
+    border-radius: 6px 6px 0 0;
+
+    &-title {
+      margin-bottom: 0;
+      font-size: toRem(18);
+      font-weight: 500;
+      color: $color-light;
+    }
+
+    &-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: toRem(10);
+    }
+
+    .header-button-text {
+      display: none;
+      color: $color-light;
+
+      @include mq(xs) {
+        display: inline-block;
+      }
+    }
+
+    .header-button-icon {
+      width: toRem(15);
+      height: toRem(15);
+      background: url("https://images.bulletcrossfit.com/icon/right-arrow.svg");
+      @extend %icon;
+    }
+  }
+
+  &__headers,
+  &__athlete {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+    align-items: center;
+    height: toRem(50);
+    min-width: fit-content;
+    padding: toRem(5) toRem(10);
+    background-color: $color-background;
+  }
+
+  &__list {
+    height: toRem(300);
+    min-height: 85%;
+    max-height: 85%;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-alternative-2;
+      border-radius: 6px;
+    }
+  }
+
+  &__athlete {
+    padding: 0;
+    margin: toRem(5) toRem(10);
+    border-bottom: 1px solid #dedede;
+    background: $color-light;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    &-name-conatainer {
+      width: 90%;
+      overflow-x: hidden;
+    }
+  }
+
+  &__athlete-name-container {
+    width: 90%;
+    overflow-x: hidden;
+
+    p {
+      min-width: toRem(250);
+      max-width: toRem(250);
+    }
+  }
+}

@@ -1,6 +1,15 @@
 @import "../../scss/config";
 @import "../../scss/global";
+@import "../../scss/mixin";
 
 .Home {
   margin-top: toRem(65);
+}
+
+.AthletesReview {
+  padding: toRem(100) toRem(24);
+
+  @include mq(md) {
+    padding: toRem(100) toRem(48);
+  }
 }

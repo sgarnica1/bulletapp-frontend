@@ -20,17 +20,45 @@ function formatHour(hour) {
   }
 }
 
+function formatDate(date) {
+  const newDate = new Date(date);
+
+  let day = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  const year = newDate.getFullYear();
+
+  if (month < 10) month = `0${month}`;
+  if (day < 10) day = `0${day}`;
+
+  return `${day}/${month}/${year}`;
+}
+
+function formatCurrency(number) {
+  number = parseFloat(number);
+
+  let formattedCurrency = new Intl.NumberFormat("en-US");
+  return `$${formattedCurrency.format(number)}`;
+}
+
 function updateAthletes(data, setData) {
   const updatedAthletes = data.map((athlete) => {
+    athlete.created = formatDate(athlete.created);
+
     const getSchedule = fetch(athlete.schedule)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw Error("Cannot fetch");
+      })
       .then((data) => {
         const hour = formatHour(data.hour);
         athlete.schedule = hour;
       });
 
     const getPlan = fetch(athlete.plan)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw Error("Cannot fetch");
+      })
       .then((data) => (athlete.plan = data.name));
 
     return Promise.all([getSchedule, getPlan]).then(() => athlete);
@@ -38,4 +66,29 @@ function updateAthletes(data, setData) {
   Promise.all(updatedAthletes).then((athletes) => setData(athletes));
 }
 
-export { formatHour, updateAthletes };
+function updatePayments(data, setData) {
+  const updatedPayments = data.map((payment) => {
+    payment.date = formatDate(payment.date);
+
+    const getAthlete = fetch(payment.athlete)
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw Error("Cannot fetch");
+      })
+      .then(
+        (data) => (payment.athlete = `${data.first_name} ${data.last_name}`)
+      );
+
+    const getPlan = fetch(payment.plan)
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw Error("Cannot fetch");
+      })
+      .then((data) => (payment.plan = data.name));
+
+    return Promise.all([getAthlete, getPlan]).then(() => payment);
+  });
+  Promise.all(updatedPayments).then((payments) => setData(payments));
+}
+
+export { formatHour, formatCurrency, updateAthletes, updatePayments };

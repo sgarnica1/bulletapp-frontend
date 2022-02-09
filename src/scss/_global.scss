@@ -58,53 +58,9 @@ $hover-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-size: contain !important;
 }
 
-%info-card {
-  border-radius: 6px;
-  margin-bottom: toRem(35);
-  background: $color-light;
-  height: toRem(400);
-  box-shadow: $hover-box-shadow;
-}
 
-%card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: $linear-gradient-header;
-  height: toRem(50);
-  padding: toRem(5) toRem(10);
 
-  .info-card__title {
-    margin-bottom: 0;
-    font-size: toRem(18);
-    font-weight: 500;
-    color: $color-light;
-  }
 
-  .info-card__button span {
-    width: toRem(15);
-    height: toRem(15);
-    background: url("../../icon/right-arrow.svg");
-    @extend %icon;
-  }
-
-  select {
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    background: none;
-    color: $color-light;
-
-    option {
-      -webkit-appearance: none;
-      color: $color-primary;
-      background: $color-background;
-    }
-  }
-  select:focus {
-    background: transparent;
-  }
-}
 
 %card-athlete-layout-general {
   display: flex;

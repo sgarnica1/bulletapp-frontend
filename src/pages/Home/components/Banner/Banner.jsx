@@ -1,8 +1,7 @@
-import "./banner.scss";
 import { Datepicker } from "../../../../components/Datepicker/Datepicker";
-import { StatCard } from "../StatCard/StatCard";
+import "./banner.scss";
 
-function Banner({ user }) {
+function Banner({ children, user }) {
   return (
     <main className="Banner">
       <section className="Banner__content">
@@ -14,12 +13,7 @@ function Banner({ user }) {
           <Datepicker />
         </div>
       </section>
-      <section className="Banner__stats">
-        <StatCard title={"Ingresos mensuales"} data={"$50,200.00"}/>
-        <StatCard title={"Ingresos productos"} data={"$7,520.00"}/>
-        <StatCard title={"Pagos totales"} data={"132"}/>
-        <StatCard title={"Atletas inscritos"} data={"157"}/>
-      </section>
+      <section className="Banner__stats">{children}</section>
     </main>
   );
 }
