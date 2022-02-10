@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useDashboard } from "../../contexts/DashboardContext";
 import "./header.scss";
 
-function Header({ setShowNav, user, location }) {
+function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { setShowNav, currentUser: user, currentLocation: location } = useDashboard();
 
   return (
     <header className="Header">

@@ -103,3 +103,11 @@
     }
   }
 }
+
+.AthletesChart__athlete--loading {
+  .AthletesChart__athlete-field {
+    width: 80%;
+    height: 15px;
+    @extend %loading-skeleton;
+  }
+}

@@ -1,37 +1,47 @@
-import {
-  updateAthletes,
-  updatePayments,
-  formatCurrency,
-} from "../../utils/utils";
-import { useFetch } from "../../hooks/useFetch";
+import { formatCurrency } from "../../utils/utils";
+import { useAthletes } from "../../contexts/AthletesContext";
+import { useDashboard } from "../../contexts/DashboardContext";
 import { Banner } from "./components/Banner/Banner";
 import { StatCard } from "./components/StatCard/StatCard";
+import { LoadingStatCard } from "./components/StatCard/LoadingStatCard";
 import { AthletesChart } from "./components/AthletesChart/AthletesChart";
 import { AthletesChartElement } from "./components/AthletesChart/AthletesChartElement";
+import { LoadingAthletesChartElement } from "./components/AthletesChart/LoadingAthletesChartElement";
 import "./home.scss";
 
-function Home({ user }) {
-  const { data: athletes } = useFetch(
-    "http://localhost:8000/athletes",
-    updateAthletes
-  );
+function Home() {
+  const { currentUser: user } = useDashboard();
 
-  const { data: payments } = useFetch(
-    "http://localhost:8000/payments",
-    updatePayments
-  );
-
-  const amount = payments.reduce(
-    (total, payment) => total + parseFloat(payment.quantity),
-    0
-  );
+  const { athletes, loadingAthletes, payments, loadingPayments, amount } =
+    useAthletes();
 
   return (
     <div className="Home">
       <Banner user={user}>
-        <StatCard title={"Ingresos mensuales"} data={formatCurrency(amount)} />
-        <StatCard title={"Pagos totales"} data={payments.length} />
-        <StatCard title={"Atletas inscritos"} data={athletes.length} route={"/atletas"}/>
+        {loadingPayments &&
+          new Array(3)
+            .fill()
+            .map((item, index) => <LoadingStatCard key={index} />)}
+
+        {!loadingPayments && (
+          <>
+            <StatCard
+              title={"Ingresos mensuales"}
+              data={formatCurrency(amount)}
+              route={"/pagos"}
+            />
+            <StatCard
+              title={"Pagos totales"}
+              data={payments.length}
+              route={"/pagos"}
+            />
+            <StatCard
+              title={"Atletas inscritos"}
+              data={athletes.length}
+              route={"/atletas"}
+            />
+          </>
+        )}
       </Banner>
 
       <section className="AthletesReview">
@@ -40,15 +50,22 @@ function Home({ user }) {
           route={"/pagos"}
           header={"Pagos"}
         >
-          {payments.map((payment) => (
-            <AthletesChartElement
-              key={payment.id}
-              name={payment.athlete}
-              date={payment.date}
-              plan={payment.plan}
-              params={formatCurrency(payment.quantity)}
-            />
-          ))}
+          {loadingPayments &&
+            new Array(5)
+              .fill()
+              .map((item, index) => (
+                <LoadingAthletesChartElement key={index} />
+              ))}
+          {!loadingPayments &&
+            payments.map((payment) => (
+              <AthletesChartElement
+                key={payment.id}
+                name={payment.athlete}
+                date={payment.date}
+                plan={payment.plan}
+                params={formatCurrency(payment.quantity)}
+              />
+            ))}
         </AthletesChart>
 
         <AthletesChart
@@ -56,15 +73,22 @@ function Home({ user }) {
           route={"/atletas"}
           header={"Clase"}
         >
-          {athletes.map((athlete) => (
-            <AthletesChartElement
-              key={athlete.id}
-              name={`${athlete.first_name} ${athlete.last_name}`}
-              date={athlete.created}
-              plan={athlete.plan}
-              params={athlete.schedule}
-            />
-          ))}
+          {loadingAthletes &&
+            new Array(5)
+              .fill()
+              .map((item, index) => (
+                <LoadingAthletesChartElement key={index} />
+              ))}
+          {!loadingAthletes &&
+            athletes.map((athlete) => (
+              <AthletesChartElement
+                key={athlete.id}
+                name={`${athlete.first_name} ${athlete.last_name}`}
+                date={athlete.created}
+                plan={athlete.plan}
+                params={athlete.schedule}
+              />
+            ))}
         </AthletesChart>
       </section>
     </div>

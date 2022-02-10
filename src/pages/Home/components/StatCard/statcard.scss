@@ -52,3 +52,25 @@
     }
   }
 }
+
+// LOADING SKELETON
+.StatCard--loading {
+  .StatCard__info {
+    width: 100%;
+  }
+
+  .StatCard__title,
+  .StatCard__number {
+    height: 15px;
+    @extend %loading-skeleton;
+  }
+
+  .StatCard__title {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .StatCard__number {
+    width: 30%;
+  }
+}

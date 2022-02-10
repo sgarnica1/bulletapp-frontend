@@ -1,17 +1,15 @@
-// import { useState } from "react";
+import { useDashboard } from "../../contexts/DashboardContext";
 import { Navitem } from "./utils/Navitem";
 import { Dropdown } from "./utils/Dropdown";
 import { DropdownElement } from "./utils/DropdownElement";
 import "./navbar.scss";
 
-function Navbar({ showNav, setShowNav }) {
-  function handleClose() {
-    setShowNav(false);
-  }
+function Navbar() {
+  const { showNav, setShowNav } = useDashboard();
 
   return (
     <aside className={`Navbar ${showNav && "show"}`}>
-      <button className="Navbar__close-btn" onClick={handleClose}>
+      <button className="Navbar__close-btn" onClick={() => setShowNav(false)}>
         <span></span>
       </button>
       <nav className="Navbar__container">
@@ -25,7 +23,7 @@ function Navbar({ showNav, setShowNav }) {
           <ul className="Navbar__navlist">
             <Navitem title={"Escritorio"} active />
             <Dropdown>
-              <DropdownElement title={"Juriquilla"} active/>
+              <DropdownElement title={"Juriquilla"} active />
               <DropdownElement title={"Zibatá"} active={false} />
               <DropdownElement title={"Grand Juriquilla"} active={false} />
             </Dropdown>
