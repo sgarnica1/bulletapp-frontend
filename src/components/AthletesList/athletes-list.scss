@@ -1,8 +1,8 @@
-@import "../../../../scss/config";
-@import "../../../../scss/global";
-@import "../../../../scss/mixin";
+@import "../../scss/config";
+@import "../../scss/global";
+@import "../../scss/mixin";
 
-.AthletesChart {
+.AthletesList {
   border-radius: 6px;
   margin-bottom: toRem(35);
   background: $color-light;
@@ -104,8 +104,8 @@
   }
 }
 
-.AthletesChart__athlete--loading {
-  .AthletesChart__athlete-field {
+.AthletesList__athlete--loading {
+  .AthletesList__athlete-field {
     width: 80%;
     height: 15px;
     @extend %loading-skeleton;

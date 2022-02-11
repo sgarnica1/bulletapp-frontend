@@ -21,21 +21,32 @@ function AthletesProvider({ children }) {
     error: errorPayments,
   } = useFetch("http://localhost:8000/payments", updatePayments);
 
-  const amount = payments.reduce(
+  const {
+    data: plans,
+    loading: loadingPlans,
+    error: errorPlans,
+  } = useFetch("http://localhost:8000/plans");
+
+  const totalPaymentsAmount = payments.reduce(
     (total, payment) => total + parseFloat(payment.quantity),
     0
   );
 
+  const athletesData = { athletes, loadingAthletes, errorAthletes };
+  const paymentsData = {
+    payments,
+    loadingPayments,
+    errorPayments,
+    totalPaymentsAmount,
+  };
+  const plansData = { plans, loadingPlans, errorPlans };
+
   return (
     <AthletesContext.Provider
       value={{
-        athletes,
-        loadingAthletes,
-        errorAthletes,
-        payments,
-        loadingPayments,
-        errorPayments,
-        amount,
+        athletesData,
+        paymentsData,
+        plansData,
       }}
     >
       {children}

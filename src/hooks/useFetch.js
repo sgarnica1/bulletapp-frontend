@@ -6,20 +6,18 @@ function useFetch(url, callback) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      fetch(url)
-        .then((response) => {
-          if (response.ok) return response.json();
+    fetch(url)
+      .then((response) => {
+        if (response.ok) return response.json();
 
-          throw new Error("Cannot fetch");
-        })
-        .then((data) => {
-          if (loading) setLoading(false);
-          if (callback) return callback(data, setData);
-          setData(data);
-        })
-        .catch((err) => setError(err));
-    }, 2000);
+        throw new Error("Cannot fetch");
+      })
+      .then((data) => {
+        if (loading) setLoading(false);
+        if (callback) return callback(data, setData);
+        setData(data);
+      })
+      .catch((err) => setError(err));
   }, []);
 
   return { loading, data, error };

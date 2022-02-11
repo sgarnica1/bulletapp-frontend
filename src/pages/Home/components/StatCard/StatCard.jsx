@@ -1,7 +1,6 @@
 import "./statcard.scss";
 
 function StatCard({ title, data, route }) {
-  console.log(data)
   return (
     <a className="StatCard" href={route}>
       <div className="StatCard__info">
