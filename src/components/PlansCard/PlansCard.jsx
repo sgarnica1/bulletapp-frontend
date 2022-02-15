@@ -1,6 +1,14 @@
+import { useState } from "react";
+import { useFetch } from "../../hooks/useFetch";
 import "./plans-card.scss";
 
-function PlansCard({ title, price, subscriptions }) {
+function PlansCard({ id, title, price }) {
+  const [subscriptions, setSubscriptions] = useState(0);
+
+  useFetch(`http://localhost:8000/plans/${id}/atletas/`, (data) => {
+    setSubscriptions(data.length);
+  });
+
   return (
     <article className="PlansCard">
       <div className="PlansCard__header">

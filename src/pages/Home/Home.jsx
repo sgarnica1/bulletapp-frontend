@@ -114,7 +114,11 @@ function Home() {
         )}
 
         <CardsList title={"Planes"}>
-          {errorPlans && <ErrorBanner description={"Ocurrió un error al cargar los planes"}/>}
+          {errorPlans && (
+            <ErrorBanner
+              description={"Ocurrió un error al cargar los planes"}
+            />
+          )}
           {!errorPlans &&
             loadingPlans &&
             new Array(6)
@@ -125,9 +129,9 @@ function Home() {
             plans.map((plan) => (
               <PlansCard
                 key={plan.id}
+                id={plan.id}
                 title={plan.name}
                 price={formatCurrency(plan.price)}
-                subscriptions={plan.subscriptions}
               />
             ))}
         </CardsList>
