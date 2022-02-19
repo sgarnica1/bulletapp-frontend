@@ -1,4 +1,5 @@
 import { useDashboard } from "../../contexts/DashboardContext";
+import { Link } from "react-router-dom";
 import { Navitem } from "./utils/Navitem";
 import { Dropdown } from "./utils/Dropdown";
 import { DropdownElement } from "./utils/DropdownElement";
@@ -13,32 +14,38 @@ function Navbar() {
         <span></span>
       </button>
       <nav className="Navbar__container">
-        <div className="Navbar__logo">
+        <Link to={"/"} className="Navbar__logo">
           <img
             src="https://images.bulletcrossfit.com/img/logo_white_resized.png"
             alt="Logo Bullet CrossFit"
           />
-        </div>
+        </Link>
         <div className="Navbar__content">
           <ul className="Navbar__navlist">
-            <Navitem title={"Escritorio"} active />
+            <Navitem title={"Escritorio"} path={"/"} />
             <Dropdown>
-              <DropdownElement title={"Juriquilla"} active />
-              <DropdownElement title={"Zibatá"} active={false} />
-              <DropdownElement title={"Grand Juriquilla"} active={false} />
+              <DropdownElement
+                title={"Juriquilla"}
+                path={"/sucursal/juriquilla"}
+              />
+              <DropdownElement title={"Zibatá"} path={"/sucursal/zibata"} />
+              <DropdownElement
+                title={"Grand Juriquilla"}
+                path={"/sucursal/grand-juriquilla"}
+              />
             </Dropdown>
-            <Navitem title={"Pagos"} />
-            <Navitem title={"Atletas"} />
-            <Navitem title={"Clases"} />
-            <Navitem title={"Planes"} />
+            <Navitem title={"Pagos"} path={"/pagos"} />
+            <Navitem title={"Atletas"} path={"/atletas"} />
+            <Navitem title={"Clases"} path={"/clases"} />
+            <Navitem title={"Planes"} path={"/planes"} />
 
             <h4 className="Navbar__subtitle">Recursos</h4>
-            <Navitem title={"Programación"} />
-            <Navitem title={"Videos"} />
+            <Navitem title={"Programación"} path={"/programacion"} />
+            <Navitem title={"Videos"} path={"/videos"} />
 
             <h4 className="Navbar__subtitle">Cuenta</h4>
-            <Navitem title={"Ajustes"} />
-            <Navitem title={"Salir"} />
+            <Navitem title={"Ajustes"} path={"/ajustes"} />
+            <Navitem title={"Salir"} path={"/salir"} />
           </ul>
         </div>
       </nav>

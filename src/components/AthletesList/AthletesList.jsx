@@ -1,26 +1,51 @@
+import { Link } from "react-router-dom";
+import { useDashboard } from "../../contexts/DashboardContext";
+import { EmptyAthleteRow } from "./EmptyAthleteRow";
+import { LoadingAthleteRow } from "./LoadingAthleteRow";
 import "./athletes-list.scss";
 
-function AthletesList({ children, title, route, header }) {
+function AthletesList(props) {
+  const { setActiveView } = useDashboard();
+
+  if (props.error) {
+    return props.onError();
+  }
+
+  if (props.loading) {
+    return new Array(5)
+      .fill()
+      .map((item, index) => <LoadingAthleteRow key={index} />);
+  }
+
+
+
+  const renderFunc = props.children ? props.children : props.render;
+
   return (
     <article className="AthletesList">
       <div className="AthletesList__header">
-        <h3 className="AthletesList__header-title">{title}</h3>
-        <a href={route} className="AthletesList__header-button">
+        <h3 className="AthletesList__header-title">{props.title}</h3>
+        <Link
+          to={props.route}
+          className="AthletesList__header-button"
+          onClick={() => setActiveView(props.activeView)}
+        >
           <span className="header-button-text">Ver todo</span>
           <span className="header-button-icon"></span>
-        </a>
+        </Link>
       </div>
 
       <div className="AthletesList__list">
-        {header && (
+        {props.header && (
           <div className="AthletesList__headers">
             <p className="AthletesList__headers-title">Atletas</p>
             <p className="AthletesList__headers-title">Fecha</p>
             <p className="AthletesList__headers-title">Plan</p>
-            <p className="AthletesList__headers-title">{header}</p>
+            <p className="AthletesList__headers-title">{props.header}</p>
           </div>
         )}
-        {children}
+        {props.data?.length < 1 && <EmptyAthleteRow message={"No hay información registrada todavía"}/>}
+        {props.data?.map(renderFunc)}
       </div>
     </article>
   );

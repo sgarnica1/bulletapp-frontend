@@ -1,25 +1,18 @@
 @import "../../../../scss/config";
 @import "../../../../scss/global";
 @import "../../../../scss/mixin";
+@import "../../../../components/Banner/banner.scss";
 
-.Banner {
-  padding: toRem(24);
-  background: $color-background-linear;
-  @include mq(md) {
-    padding: toRem(24) toRem(48);
-  }
-
-  &__user {
-    color: $color-primary;
-    font-size: toRem(36);
-    margin-bottom: toRem(16);
-  }
+.HomeBanner {
+  @extend .Banner;
+  margin-bottom: toRem(50);
 
   &__title {
-    font-weight: 500;
-    margin-bottom: toRem(30);
-    font-size: toRem(25);
-    color: $color-alternative-2;
+    @extend .Banner__title;
+  }
+
+  &__description {
+    @extend .Banner__description;
   }
 
   &__stats {

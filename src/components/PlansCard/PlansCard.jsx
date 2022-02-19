@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
+import { useAthletes } from "../../contexts/AthletesContext";
 import "./plans-card.scss";
 
 function PlansCard({ id, title, price }) {
   const [subscriptions, setSubscriptions] = useState(0);
+  const { apiUrl } = useAthletes();
 
-  useFetch(`http://localhost:8000/plans/${id}/atletas/`, (data) => {
+  useFetch(`${apiUrl}/plans/${id}/atletas/`, (data) => {
     setSubscriptions(data.length);
   });
 

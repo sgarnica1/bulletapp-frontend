@@ -1,15 +1,14 @@
 import { useAthletes } from "../../contexts/AthletesContext";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { formatCurrency } from "../../utils/utils";
-import "./home.scss";
 
 // Components
-import { Banner } from "./components/Banner/Banner";
+import { HomeBanner } from "./components/HomeBanner/HomeBanner";
 import { StatCard } from "./components/StatCard/StatCard";
 import { LoadingStatCard } from "./components/StatCard/LoadingStatCard";
+import { ContentContainer } from "../../components/ContentContainer/ContentContainer";
 import { AthletesList } from "../../components/AthletesList/AthletesList";
 import { AthleteRow } from "../../components/AthletesList/AthleteRow";
-import { LoadingAthleteRow } from "../../components/AthletesList/LoadingAthleteRow";
 import { CardsList } from "../../components/CardsList/CardsList";
 import { PlansCard } from "../../components/PlansCard/PlansCard";
 import { LoadingPlansCard } from "../../components/PlansCard/LoadingPlansCard";
@@ -27,7 +26,7 @@ function Home() {
 
   return (
     <div className="Home">
-      <Banner user={user}>
+      <HomeBanner user={user}>
         {!errorPayments &&
           loadingPayments &&
           new Array(3)
@@ -53,65 +52,58 @@ function Home() {
             />
           </>
         )}
-      </Banner>
+      </HomeBanner>
 
-      <section className="ContentReview">
-        {errorPayments && (
-          <ErrorBanner description={"Ocurrió un error al cargar los pagos"} />
-        )}
-        {!errorPayments && (
-          <AthletesList
-            title={"Pagos realizados"}
-            route={"/pagos"}
-            header={"Pagos"}
-          >
-            {errorPayments && <ErrorBanner />}
-            {loadingPayments &&
-              new Array(5)
-                .fill()
-                .map((item, index) => <LoadingAthleteRow key={index} />)}
-            {!loadingPayments &&
-              payments.map((payment) => (
-                <AthleteRow
-                  key={payment.id}
-                  name={payment.athlete}
-                  date={payment.date}
-                  plan={payment.plan}
-                  params={formatCurrency(payment.quantity)}
-                />
-              ))}
-          </AthletesList>
-        )}
+      <ContentContainer>
+        <AthletesList
+          title={"Pagos realizados"}
+          route={"/pagos"}
+          header={"Pagos"}
+          error={errorPayments}
+          loading={loadingPayments}
+          data={payments}
+          activeView={"Pagos"}
+          // Render functions
+          onError={() => (
+            <ErrorBanner description={"Ocurrió un error al cargar los pagos"} />
+          )}
+          render={(payment) => (
+            <AthleteRow
+              key={payment.id}
+              name={payment.athlete}
+              date={payment.date}
+              plan={payment.plan}
+              params={formatCurrency(payment.quantity)}
+            />
+          )}
+        ></AthletesList>
 
-        {errorAthletes && (
-          <ErrorBanner
-            description={
-              "Ocurrió un error al cargar la información de los atletas"
-            }
-          />
-        )}
-        {!errorAthletes && (
-          <AthletesList
-            title={"Inscripciones recientes"}
-            route={"/atletas"}
-            header={"Clase"}
-          >
-            {loadingAthletes &&
-              new Array(5)
-                .fill()
-                .map((item, index) => <LoadingAthleteRow key={index} />)}
-            {!loadingAthletes &&
-              athletes.map((athlete) => (
-                <AthleteRow
-                  key={athlete.id}
-                  name={`${athlete.first_name} ${athlete.last_name}`}
-                  date={athlete.created}
-                  plan={athlete.plan}
-                  params={athlete.schedule}
-                />
-              ))}
-          </AthletesList>
-        )}
+        <AthletesList
+          title={"Inscripciones recientes"}
+          route={"/atletas"}
+          header={"Clase"}
+          error={errorAthletes}
+          loading={loadingAthletes}
+          data={athletes}
+          activeView={"Atletas"}
+          // Render functions
+          onError={() => (
+            <ErrorBanner
+              description={
+                "Ocurrió un error al cargar la información de los atletas"
+              }
+            />
+          )}
+          render={(athlete) => (
+            <AthleteRow
+              key={athlete.id}
+              name={`${athlete.first_name} ${athlete.last_name}`}
+              date={athlete.created}
+              plan={athlete.plan}
+              params={athlete.schedule}
+            />
+          )}
+        ></AthletesList>
 
         <CardsList title={"Planes"}>
           {errorPlans && (
@@ -147,7 +139,7 @@ function Home() {
             styleClass={"video"}
           />
         </CardsList>
-      </section>
+      </ContentContainer>
     </div>
   );
 }
