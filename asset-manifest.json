@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/bulletapp-frontend/static/css/main.082470b8.css",
-    "main.js": "/bulletapp-frontend/static/js/main.414a30f3.js",
+    "main.js": "/bulletapp-frontend/static/js/main.f9251fd6.js",
     "index.html": "/bulletapp-frontend/index.html",
     "main.082470b8.css.map": "/bulletapp-frontend/static/css/main.082470b8.css.map",
-    "main.414a30f3.js.map": "/bulletapp-frontend/static/js/main.414a30f3.js.map"
+    "main.f9251fd6.js.map": "/bulletapp-frontend/static/js/main.f9251fd6.js.map"
   },
   "entrypoints": [
     "static/css/main.082470b8.css",
-    "static/js/main.414a30f3.js"
+    "static/js/main.f9251fd6.js"
   ]
 }
