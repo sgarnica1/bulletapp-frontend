@@ -16,7 +16,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/atletas/" element={<Athletes />} />
+            <Route path="/atletas" element={<Athletes />} />
             <Route path="/atletas/nuevo" element={<AddAthlete />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
