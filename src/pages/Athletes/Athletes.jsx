@@ -54,6 +54,8 @@ function Athletes() {
               date={athlete.created}
               plan={athlete.plan}
               params={athlete.schedule}
+              id={athlete.id}
+              endpoint={"athletes"}
             />
           )}
         ></AthletesList>

@@ -68,7 +68,19 @@ function AthletesProvider({ children }) {
       .catch((err) => console.log(err));
   }
 
-  const actions = { addData };
+  function deleteData(endpoint) {
+    fetch(endpoint, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw Error();
+        return res.json();
+      })
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }
+
+  const actions = { addData, deleteData };
 
   return (
     <AthletesContext.Provider

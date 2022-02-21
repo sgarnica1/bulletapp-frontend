@@ -74,6 +74,8 @@ function Home() {
               date={payment.date}
               plan={payment.plan}
               params={formatCurrency(payment.quantity)}
+              id={payment.id}
+              endpoint={"payments"}
             />
           )}
         ></AthletesList>
@@ -101,6 +103,8 @@ function Home() {
               date={athlete.created}
               plan={athlete.plan}
               params={athlete.schedule}
+              id={athlete.id}
+              endpoint={"athletes"}
             />
           )}
         ></AthletesList>

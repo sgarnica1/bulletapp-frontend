@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAthletes } from "../../contexts/AthletesContext";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./addathlete-form.scss";
 
 function AddAthleteForm() {
@@ -10,7 +10,7 @@ function AddAthleteForm() {
   const { schedules } = schedulesData;
   const { plans } = plansData;
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [athlete, setAthlete] = useState({
     first_name: "",
@@ -42,6 +42,7 @@ function AddAthleteForm() {
         console.log(athlete);
         const endpoint = `${apiUrl}/athletes/`;
         actions.addData(endpoint, athlete);
+        navigate("/atletas")
       }}
     >
       <div className="AddAthleteForm__input-container">

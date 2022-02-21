@@ -7,20 +7,22 @@ function useFetch(endpoint, callback) {
 
   useEffect(() => {
     console.log(endpoint);
+    function fetchData() {
+      fetch(endpoint)
+        .then((response) => {
+          if (response.ok) return response.json();
 
-    fetch(endpoint)
-      .then((response) => {
-        if (response.ok) return response.json();
-
-        throw new Error("Cannot fetch");
-      })
-      .then((data) => {
-        if (loading) setLoading(false);
-        if (callback) return callback(data, setData);
-        setData(data);
-      })
-      .catch((err) => setError(err));
-  }, []);
+          throw new Error("Cannot fetch");
+        })
+        .then((data) => {
+          if (loading) setLoading(false);
+          if (callback) return callback(data, setData);
+          setData(data);
+        })
+        .catch((err) => setError(err));
+    }
+    fetchData()
+  }, [callback, endpoint, loading]);
 
   return { loading, data, error };
 }

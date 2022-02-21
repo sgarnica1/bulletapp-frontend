@@ -1,3 +1,4 @@
+
 function formatHour(hour) {
   let time = {};
   let timeValues = hour.split(":");
@@ -65,7 +66,6 @@ function updateAthletes(data, setData) {
   });
   Promise.all(updatedAthletes).then((athletes) => setData(athletes));
 }
-
 
 function updatePayments(data, setData) {
   const updatedPayments = data.map((payment) => {
