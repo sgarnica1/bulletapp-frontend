@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/bulletapp-frontend/static/css/main.082470b8.css",
+    "main.js": "/bulletapp-frontend/static/js/main.1089c14a.js",
+    "index.html": "/bulletapp-frontend/index.html",
+    "main.082470b8.css.map": "/bulletapp-frontend/static/css/main.082470b8.css.map",
+    "main.1089c14a.js.map": "/bulletapp-frontend/static/js/main.1089c14a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.082470b8.css",
+    "static/js/main.1089c14a.js"
+  ]
+}
