@@ -11,9 +11,6 @@ function useAthletes() {
 function AthletesProvider({ children }) {
   const apiUrl = "https://sgarn.pythonanywhere.com";
 
-  const [error, setError] = React.useState(false);
-  const [errorMessages, setErrorMessages] = React.useState([]);
-
   const {
     data: athletes,
     loading: loadingAthletes,
@@ -64,14 +61,14 @@ function AthletesProvider({ children }) {
       },
     })
       .then((res) => {
-        if (!res.ok) setError(true);
+        if (!res.ok) throw Error();
         return res.json();
       })
       .then((data) => console.log(data))
-      .catch(() => setError(true));
+      .catch((err) => console.log(err));
   }
 
-  const actions = { addData, error, errorMessages };
+  const actions = { addData };
 
   return (
     <AthletesContext.Provider

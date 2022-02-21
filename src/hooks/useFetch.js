@@ -6,6 +6,8 @@ function useFetch(endpoint, callback) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    console.log(endpoint);
+
     fetch(endpoint)
       .then((response) => {
         if (response.ok) return response.json();
