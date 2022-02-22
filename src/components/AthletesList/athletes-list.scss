@@ -61,7 +61,7 @@
   &__headers,
   &__athlete {
     display: grid;
-    grid-template-columns: repeat(4, minmax(150px, 1fr));
+    grid-template-columns: repeat(4, minmax(150px, 1fr)) 10%;
     align-items: center;
     height: toRem(50);
     min-width: fit-content;
@@ -110,6 +110,20 @@
       max-width: toRem(250);
     }
   }
+
+  &__athlete-field--delete {
+    outline: none;
+    border: none;
+    border-radius: toRem(6);
+    padding: toRem(5);
+    margin-right: toRem(10);
+    color: $color-light;
+    background-color: $color-error;
+  }
+
+  &__athlete-field--delete:hover {
+    opacity: 0.8;
+  }
 }
 
 .AthletesList__athlete--loading {
@@ -128,4 +142,14 @@
   padding: toRem(30) toRem(20);
   font-size: toRem(22);
   font-weight: 600;
+}
+
+.Home {
+  .AthletesList__headers,
+  .AthletesList__athlete {
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+  }
+  .AthletesList__athlete-field--delete {
+    display: none;
+  }
 }

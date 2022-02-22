@@ -1,8 +1,8 @@
-// import { useAthletes } from "../../contexts/AthletesContext";
+import { useAthletes } from "../../contexts/AthletesContext";
 
 function AthleteRow({ name, date, plan, params, id, endpoint }) {
-  // const { apiUrl, actions } = useAthletes();
-  // const deleteUrl = `${apiUrl}/${endpoint}/${id}`;
+  const { apiUrl, actions } = useAthletes();
+  const deleteUrl = `${apiUrl}/${endpoint}/${id}`;
 
   return (
     <div className="AthletesList__athlete">
@@ -12,14 +12,17 @@ function AthleteRow({ name, date, plan, params, id, endpoint }) {
       <p className="AthletesList__athlete-field">{date}</p>
       <p className="AthletesList__athlete-field">{plan}</p>
       <p className="AthletesList__athlete-field">{params}</p>
-      {/* <button
-        className="AthletesList__athlete-field"
+      <button
+        className="AthletesList__athlete-field AthletesList__athlete-field--delete"
         onClick={() => {
-          actions.deleteData(deleteUrl);
+          actions.deleteData(deleteUrl, () => {
+            console.log("ok");
+            window.location.reload();
+          });
         }}
       >
-        Delete
-      </button> */}
+        Elimiar
+      </button>
     </div>
   );
 }

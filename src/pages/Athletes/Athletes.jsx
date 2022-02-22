@@ -1,4 +1,6 @@
 import { useAthletes } from "../../contexts/AthletesContext";
+import { useFetch } from "../../hooks/useFetch";
+import { updateAthletes } from "../../utils/utils";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
 
@@ -13,9 +15,13 @@ import "./athletes.scss";
 
 function Athletes() {
   const navigate = useNavigate();
+  const { apiUrl } = useAthletes();
 
-  const { athletesData } = useAthletes();
-  const { athletes, loadingAthletes, errorAthletes } = athletesData;
+  const {
+    data: athletes,
+    loading: loadingAthletes,
+    error: errorAthletes,
+  } = useFetch(`${apiUrl}/athletes`, updateAthletes);
 
   const { searchValue, setSearchValue, searchDataFromInput } = useDashboard();
 

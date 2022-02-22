@@ -52,7 +52,7 @@ function AthletesProvider({ children }) {
 
   // FUNCTIONS
 
-  function addData(endpoint, data) {
+  function addData(endpoint, data, callback) {
     fetch(endpoint, {
       method: "POST",
       body: JSON.stringify(data),
@@ -64,20 +64,20 @@ function AthletesProvider({ children }) {
         if (!res.ok) throw Error();
         return res.json();
       })
-      .then((data) => console.log(data))
+      .then(() => callback())
       .catch((err) => console.log(err));
   }
 
-  function deleteData(endpoint) {
+  function deleteData(endpoint, callback) {
     fetch(endpoint, {
       method: "DELETE",
     })
-      .then((res) => {
-        if (!res.ok) throw Error();
-        return res.json();
-      })
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+      // .then((res) => {
+      //   if (!res.ok) throw Error();
+      //   return res.json();
+      // })
+      .then(() => callback())
+      // .catch((err) => console.log(err));
   }
 
   const actions = { addData, deleteData };

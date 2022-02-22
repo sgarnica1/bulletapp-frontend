@@ -33,17 +33,19 @@ function AddAthleteForm() {
     });
   }
 
+  function handleSubmitData(event) {
+    event.preventDefault();
+    const endpoint = `${apiUrl}/athletes/`;
+    actions.addData(endpoint, athlete, () => {
+      navigate("/atletas");
+    });
+  }
+
   return (
     <form
       className="AddAthleteForm"
       autoComplete="off"
-      onSubmit={(event) => {
-        event.preventDefault();
-        console.log(athlete);
-        const endpoint = `${apiUrl}/athletes/`;
-        actions.addData(endpoint, athlete);
-        navigate("/atletas")
-      }}
+      onSubmit={(event) => handleSubmitData(event)}
     >
       <div className="AddAthleteForm__input-container">
         <label htmlFor="firstname">Nombre</label>
