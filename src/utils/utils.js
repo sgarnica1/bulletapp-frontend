@@ -1,4 +1,3 @@
-
 function formatHour(hour) {
   let time = {};
   let timeValues = hour.split(":");

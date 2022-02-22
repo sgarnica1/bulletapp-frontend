@@ -15,13 +15,19 @@ function useFetch(endpoint, callback) {
           throw new Error("Cannot fetch");
         })
         .then((data) => {
-          if (loading) setLoading(false);
-          if (callback) return callback(data, setData);
-          setData(data);
+          if (callback) {
+            callback(data, setData, setLoading);
+            if (loading) setLoading(false);
+          } else {
+            if (loading) setLoading(false);
+            setData(data);
+          }
+          // if (loading) setLoading(false);
+          // setData(data);
         })
         .catch((err) => setError(err));
     }
-    fetchData()
+    fetchData();
   }, [callback, endpoint, loading]);
 
   return { loading, data, error };
