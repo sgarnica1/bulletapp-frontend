@@ -1,4 +1,5 @@
 import { useDashboard } from "../../contexts/DashboardContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Navitem } from "./utils/Navitem";
 import { Dropdown } from "./utils/Dropdown";
@@ -7,6 +8,7 @@ import "./navbar.scss";
 
 function Navbar() {
   const { showNav, setShowNav } = useDashboard();
+  const { logoutUser } = useAuth();
 
   return (
     <aside className={`Navbar ${showNav && "show"}`}>
@@ -45,7 +47,9 @@ function Navbar() {
 
             <h4 className="Navbar__subtitle">Cuenta</h4>
             <Navitem title={"Ajustes"} path={"/ajustes"} />
-            <Navitem title={"Salir"} path={"/salir"} />
+            <li className="Navbar__navitem" onClick={logoutUser}>
+              Salir
+            </li>
           </ul>
         </div>
       </nav>

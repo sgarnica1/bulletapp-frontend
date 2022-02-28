@@ -6,7 +6,6 @@ function useFetch(endpoint, callback) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    console.log(endpoint);
     function fetchData() {
       fetch(endpoint)
         .then((response) => {

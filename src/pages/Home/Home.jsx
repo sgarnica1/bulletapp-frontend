@@ -1,6 +1,6 @@
 import { useAthletes } from "../../contexts/AthletesContext";
-import { useDashboard } from "../../contexts/DashboardContext";
 import { formatCurrency } from "../../utils/utils";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Components
 import { HomeBanner } from "./components/HomeBanner/HomeBanner";
@@ -16,7 +16,8 @@ import { ToolsCard } from "../../components/ToolsCard/ToolsCard";
 import { ErrorBanner } from "../../components/ErrorBanner/ErrorBanner";
 
 function Home() {
-  const { currentUser: user } = useDashboard();
+  const { user } = useAuth();
+
   const { athletesData, paymentsData, plansData } = useAthletes();
 
   const { athletes, loadingAthletes, errorAthletes } = athletesData;
@@ -26,7 +27,13 @@ function Home() {
 
   return (
     <div className="Home">
-      <HomeBanner user={user}>
+      <HomeBanner
+        user={
+          user.first_name
+            ? user.first_name
+            : user.username[0].toUpperCase() + user.username.slice(1)
+        }
+      >
         {!errorPayments &&
           loadingPayments &&
           new Array(3)

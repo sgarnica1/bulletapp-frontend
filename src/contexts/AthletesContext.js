@@ -9,7 +9,8 @@ function useAthletes() {
 }
 
 function AthletesProvider({ children }) {
-  const apiUrl = "https://sgarn.pythonanywhere.com";
+  // const apiUrl = "https://sgarn.pythonanywhere.com";
+  const apiUrl = "http://localhost:8000/api";
 
   const {
     data: athletes,

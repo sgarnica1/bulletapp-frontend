@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDashboard } from "../../contexts/DashboardContext";
+import { useAuth } from "../../contexts/AuthContext";
 import "./header.scss";
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { setShowNav, currentUser: user, currentLocation: location } = useDashboard();
+  const { setShowNav, currentLocation: location } = useDashboard();
+  const { user, logoutUser } = useAuth();
 
   return (
     <header className="Header">
@@ -23,7 +25,11 @@ function Header() {
           <li className="Header__nav-element">
             <div className="Header__user">
               <div className="Header__user-profile">
-                <span>S</span>
+                <span>
+                  {user.first_name
+                    ? user.first_name[0]
+                    : user.username[0].toUpperCase()}
+                </span>
               </div>
               <div className="Header__user-info Header__dropdown">
                 <button
@@ -31,7 +37,9 @@ function Header() {
                   type="button"
                   onClick={() => setShowDropdown((prevState) => !prevState)}
                 >
-                  {user}
+                  {user.first_name
+                    ? user.first_name
+                    : user.username[0].toUpperCase() + user.username.slice(1)}
                   <span className="dropdown__toggle-icon"></span>
                 </button>
                 <ul className={`dropdown__content ${showDropdown && "show"}`}>
@@ -40,10 +48,8 @@ function Header() {
                       Ajustes
                     </a>
                   </li>
-                  <li>
-                    <a className="dropdown__item" href="/">
-                      Salir
-                    </a>
+                  <li onClick={logoutUser} style={{ cursor: "pointer" }}>
+                    Salir
                   </li>
                 </ul>
               </div>
