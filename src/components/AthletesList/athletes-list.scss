@@ -137,11 +137,14 @@
 
 .EmptyAthleteRow {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: toRem(30) toRem(20);
-  font-size: toRem(22);
-  font-weight: 600;
+
+  &__icon {
+    @extend %icon;
+    width: toRem(20);
+    height: toRem(20);
+    margin-right: toRem(10);
+    background: url("https://images.bulletcrossfit.com/icon/alert.png");
+  }
 }
 
 .Home {

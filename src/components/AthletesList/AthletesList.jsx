@@ -14,12 +14,11 @@ function AthletesList(props) {
   if (props.loading) {
     return new Array(5)
       .fill()
-      .map((item, index) => <LoadingAthleteRow key={index} />);
+      .map((_, index) => <LoadingAthleteRow key={index} />);
   }
 
-
-
   const renderFunc = props.children ? props.children : props.render;
+
 
   return (
     <article className="AthletesList">

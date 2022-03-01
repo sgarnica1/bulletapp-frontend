@@ -1,7 +1,9 @@
-import { useAthletes } from "../../contexts/AthletesContext";
+import { useEffect } from "react";
 import { formatCurrency } from "../../utils/utils";
 import { useAuth } from "../../contexts/AuthContext";
-
+import { useAthletes } from "../../hooks/useAthletes";
+import { usePayments } from "../../hooks/usePayments";
+import { usePlans } from "../../hooks/usePlans";
 // Components
 import { HomeBanner } from "./components/HomeBanner/HomeBanner";
 import { StatCard } from "./components/StatCard/StatCard";
@@ -18,12 +20,33 @@ import { ErrorBanner } from "../../components/ErrorBanner/ErrorBanner";
 function Home() {
   const { user } = useAuth();
 
-  const { athletesData, paymentsData, plansData } = useAthletes();
+  const {
+    athletes,
+    loading: loadingAthletes,
+    error: errorAthletes,
+    actions: athleteActions,
+  } = useAthletes();
 
-  const { athletes, loadingAthletes, errorAthletes } = athletesData;
-  const { payments, loadingPayments, errorPayments, totalPaymentsAmount } =
-    paymentsData;
-  const { plans, loadingPlans, errorPlans } = plansData;
+  const {
+    payments,
+    loading: loadingPayments,
+    error: errorPayments,
+    totalPaymentsAmount,
+    getPayments,
+  } = usePayments();
+
+  const {
+    plans,
+    loading: loadingPlans,
+    error: errorPlans,
+    getPlans,
+  } = usePlans();
+
+  useEffect(() => {
+    athleteActions.getAthletes();
+    getPayments();
+    getPlans();
+  }, []);
 
   return (
     <div className="Home">
@@ -38,7 +61,7 @@ function Home() {
           loadingPayments &&
           new Array(3)
             .fill()
-            .map((item, index) => <LoadingStatCard key={index} />)}
+            .map((_, index) => <LoadingStatCard key={index} />)}
 
         {!errorPayments && !loadingPayments && (
           <>
@@ -49,12 +72,12 @@ function Home() {
             />
             <StatCard
               title={"Pagos totales"}
-              data={payments.length}
+              data={payments?.length}
               route={"/pagos"}
             />
             <StatCard
               title={"Atletas inscritos"}
-              data={athletes.length}
+              data={athletes?.length}
               route={"/atletas"}
             />
           </>
@@ -77,11 +100,11 @@ function Home() {
           render={(payment) => (
             <AthleteRow
               key={payment.id}
+              id={payment.id}
               name={payment.athlete}
               date={payment.date}
               plan={payment.plan}
               params={formatCurrency(payment.quantity)}
-              id={payment.id}
               endpoint={"payments"}
             />
           )}
@@ -106,11 +129,11 @@ function Home() {
           render={(athlete) => (
             <AthleteRow
               key={athlete.id}
+              id={athlete.id}
               name={`${athlete.first_name} ${athlete.last_name}`}
               date={athlete.created}
               plan={athlete.plan}
               params={athlete.schedule}
-              id={athlete.id}
               endpoint={"athletes"}
             />
           )}
@@ -126,7 +149,7 @@ function Home() {
             loadingPlans &&
             new Array(6)
               .fill()
-              .map((item, index) => <LoadingPlansCard key={index} />)}
+              .map((_, index) => <LoadingPlansCard key={index} />)}
           {!errorPlans &&
             !loadingPlans &&
             plans.map((plan) => (

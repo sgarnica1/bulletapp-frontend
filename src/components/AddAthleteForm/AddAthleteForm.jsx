@@ -1,16 +1,24 @@
-import { useState } from "react";
-import { useAthletes } from "../../contexts/AthletesContext";
-import { useNavigate } from "react-router-dom";
 import "./addathlete-form.scss";
+import { API_BASE_URL } from "../../utils/requests";
+import { useEffect, useState } from "react";
+import { useAthletes } from "../../hooks/useAthletes";
+import { useSchedules } from "../../hooks/useSchedules";
+import { usePlans } from "../../hooks/usePlans";
+import { useNavigate } from "react-router-dom";
 
 function AddAthleteForm() {
-  const { apiUrl, athletesData, schedulesData, plansData, actions } =
-    useAthletes();
-  const { athletes } = athletesData;
-  const { schedules } = schedulesData;
-  const { plans } = plansData;
-
+  const { athletes, actions: athleteActions } = useAthletes();
+  const { plans, getPlans } = usePlans();
+  const { schedules, getSchedules } = useSchedules();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // const abortCont = new AbortController();
+    athleteActions.getAthletes();
+    getPlans();
+    getSchedules();
+    // return () => abortCont.abort();
+  }, []);
 
   const [athlete, setAthlete] = useState({
     first_name: "",
@@ -35,8 +43,7 @@ function AddAthleteForm() {
 
   function handleSubmitData(event) {
     event.preventDefault();
-    const endpoint = `${apiUrl}/athletes/`;
-    actions.addData(endpoint, athlete, () => {
+    athleteActions.addAthlete(athlete, () => {
       navigate("/atletas");
     });
   }
@@ -87,7 +94,7 @@ function AddAthleteForm() {
         <select
           required
           onChange={(event) =>
-            updateAthleteInfo(event, "plan", `${apiUrl}/plans/`)
+            updateAthleteInfo(event, "plan", `${API_BASE_URL}/plans/`)
           }
         >
           <option value="">Selecciona un plan</option>
@@ -104,7 +111,7 @@ function AddAthleteForm() {
         <select
           required
           onChange={(event) =>
-            updateAthleteInfo(event, "schedule", `${apiUrl}/schedule/`)
+            updateAthleteInfo(event, "schedule", `${API_BASE_URL}/schedule/`)
           }
         >
           <option value="">Selecciona una clase</option>
@@ -121,7 +128,7 @@ function AddAthleteForm() {
         <label htmlFor="group">Beneficiario (opcional)</label>
         <select
           onChange={(event) =>
-            updateAthleteInfo(event, "beneficiary", `${apiUrl}/athletes/`)
+            updateAthleteInfo(event, "beneficiary", `${API_BASE_URL}/athletes/`)
           }
         >
           <option value="">Selecciona un atleta</option>

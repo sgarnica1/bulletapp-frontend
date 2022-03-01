@@ -10,15 +10,21 @@
 }
 
 .InputContainer {
-  position: relative;
-  width: 100%;
-  border-bottom: 1px solid $color-alternative-2;
-  margin-bottom: toRem(10);
+  &__field {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid $color-alternative-2;
+    margin-bottom: toRem(10);
+  }
+
+  &__field.error {
+    border-bottom-color: $color-error;
+  }
 
   &__label {
     position: absolute;
     transition: ease-in 0.3s;
-    bottom: 7px;
+    bottom: 10px;
     font-size: toRem(16);
     font-family: $font-secondary;
     color: $color-alternative-2;

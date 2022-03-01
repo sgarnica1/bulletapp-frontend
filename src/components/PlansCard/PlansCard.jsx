@@ -1,15 +1,13 @@
-import { useState } from "react";
-import { useFetch } from "../../hooks/useFetch";
-import { useAthletes } from "../../contexts/AthletesContext";
+import { useEffect } from "react";
+import { useAthletes } from "../../hooks/useAthletes";
 import "./plans-card.scss";
 
 function PlansCard({ id, title, price }) {
-  const [subscriptions, setSubscriptions] = useState(0);
-  const { apiUrl } = useAthletes();
+  const { athletes, actions } = useAthletes();
 
-  useFetch(`${apiUrl}/plans/${id}/atletas/`, (data) => {
-    setSubscriptions(data.length);
-  });
+  useEffect(() => {
+    actions.getAthletesByPlan(id);
+  }, []);
 
   return (
     <article className="PlansCard">
@@ -21,7 +19,7 @@ function PlansCard({ id, title, price }) {
       </div>
       <div className="PlansCard__footer">
         <h4 className="PlansCard__footer-title">Atletas inscritos</h4>
-        <span className="PlansCard__footer-stats">{subscriptions}</span>
+        <span className="PlansCard__footer-stats">{athletes?.length}</span>
       </div>
     </article>
   );

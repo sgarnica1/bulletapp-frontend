@@ -1,8 +1,7 @@
-import { useAthletes } from "../../contexts/AthletesContext";
-import { useFetch } from "../../hooks/useFetch";
-import { updateAthletes } from "../../utils/utils";
+import { useEffect, useState } from "react";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
+import { useAthletes } from "../../hooks/useAthletes";
 
 // Components
 import { ContentContainer } from "../../components/ContentContainer/ContentContainer";
@@ -15,17 +14,16 @@ import "./athletes.scss";
 
 function Athletes() {
   const navigate = useNavigate();
-  const { apiUrl } = useAthletes();
-
-  const {
-    data: athletes,
-    loading: loadingAthletes,
-    error: errorAthletes,
-  } = useFetch(`${apiUrl}/athletes`, updateAthletes);
-
+  const [refetch, setRefetch] = useState(false);
+  const { athletes, loading, error, actions } = useAthletes();
   const { searchValue, setSearchValue, searchDataFromInput } = useDashboard();
-
   const data = searchDataFromInput(athletes);
+
+  const onRefetch = () => setRefetch((prev) => !prev);
+
+  useEffect(() => {
+    actions.getAthletes();
+  }, [refetch]);
 
   return (
     <div className="Athletes">
@@ -42,8 +40,8 @@ function Athletes() {
           title={"Inscripciones recientes"}
           route={"/atletas"}
           header={"Clase"}
-          error={errorAthletes}
-          loading={loadingAthletes}
+          error={error}
+          loading={loading}
           data={data}
           // Render functions
           onError={() => (
@@ -56,12 +54,12 @@ function Athletes() {
           render={(athlete) => (
             <AthleteRow
               key={athlete.id}
+              id={athlete.id}
               name={`${athlete.first_name} ${athlete.last_name}`}
               date={athlete.created}
               plan={athlete.plan}
               params={athlete.schedule}
-              id={athlete.id}
-              endpoint={"athletes"}
+              onRefetch={onRefetch}
             />
           )}
         ></AthletesList>

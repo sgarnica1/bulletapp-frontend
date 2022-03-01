@@ -5,7 +5,7 @@ import "./login.scss";
 
 function Login() {
   const [passInputType, setPassInputType] = useState("password");
-  const { loginUser } = useAuth();
+  const { loginUser, errorMessage, setErrorMessage } = useAuth();
 
   return (
     <div className="Login">
@@ -25,17 +25,22 @@ function Login() {
           onSubmit={(event) => {
             loginUser(event);
           }}
+          onChange={() => {
+            setErrorMessage(null);
+          }}
         >
           <div className="Login__input-container">
             <InputContainer
               type={"text"}
               name={"username"}
               placeholder={"Usuario"}
+              errorMessage={errorMessage}
             />
             <InputContainer
               type={passInputType}
               name={"password"}
               placeholder={"Contraseña"}
+              errorMessage={errorMessage}
             >
               <span
                 className={`password-toggle ${
@@ -48,6 +53,9 @@ function Login() {
                 }}
               ></span>
             </InputContainer>
+            {errorMessage ? (
+              <div className="Login__error">{errorMessage}</div>
+            ) : null}
           </div>
           <div className="Login__button-container">
             <a href="/" className="Login__passrecover-btn">

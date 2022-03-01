@@ -1,8 +1,7 @@
-import { useAthletes } from "../../contexts/AthletesContext";
+import { useAthletes } from "../../hooks/useAthletes";
 
-function AthleteRow({ name, date, plan, params, id, endpoint }) {
-  const { apiUrl, actions } = useAthletes();
-  const deleteUrl = `${apiUrl}/${endpoint}/${id}`;
+function AthleteRow({ id, name, date, plan, params, onRefetch }) {
+  const { actions } = useAthletes();
 
   return (
     <div className="AthletesList__athlete">
@@ -15,10 +14,7 @@ function AthleteRow({ name, date, plan, params, id, endpoint }) {
       <button
         className="AthletesList__athlete-field AthletesList__athlete-field--delete"
         onClick={() => {
-          actions.deleteData(deleteUrl, () => {
-            console.log("ok");
-            window.location.reload();
-          });
+          actions.deleteAthlete(id, onRefetch);
         }}
       >
         Elimiar

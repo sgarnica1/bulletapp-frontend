@@ -8,7 +8,6 @@ function useDashboard() {
 
 function DashboardProvider({ children }) {
   const [showNav, setShowNav] = useState(false);
-  const [currentUser] = useState("Sergio");
   const [currentLocation, setCurrentLocation] = useState("Juriquilla");
   const [activeView, setActiveView] = useState("Escritorio");
 
@@ -35,7 +34,6 @@ function DashboardProvider({ children }) {
     <DashboardContext.Provider
       value={{
         showNav,
-        currentUser,
         currentLocation,
         activeView,
         searchValue,

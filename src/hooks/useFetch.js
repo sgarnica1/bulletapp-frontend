@@ -21,8 +21,6 @@ function useFetch(endpoint, callback) {
             if (loading) setLoading(false);
             setData(data);
           }
-          // if (loading) setLoading(false);
-          // setData(data);
         })
         .catch((err) => setError(err));
     }
