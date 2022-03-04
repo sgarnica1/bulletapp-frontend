@@ -47,10 +47,11 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = () => {
+  const logoutUser = (callback) => {
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
+    callback();
   };
 
   const updateToken = async () => {
@@ -69,12 +70,11 @@ const AuthProvider = ({ children }) => {
         setUser(jwt_decode(data.access));
         localStorage.setItem("authTokens", JSON.stringify(data));
       } else {
-        // logoutUser(); 
+        logoutUser();
       }
     } catch (err) {
-      // logoutUser();
-      console.log(err)
-
+      logoutUser();
+      console.log(err);
     }
 
     if (loading) setLoading(false);

@@ -10,8 +10,23 @@ function DashboardProvider({ children }) {
   const [showNav, setShowNav] = useState(false);
   const [currentLocation, setCurrentLocation] = useState("Juriquilla");
   const [activeView, setActiveView] = useState("Escritorio");
-
   const [searchValue, setSearchValue] = useState("");
+
+  const views = {
+    escritorio: "Escritorio",
+    pagos: "Pagos",
+    atletas: "Atletas",
+    clases: "Clases",
+    planes: "Planes",
+    programacion: "Programación",
+    videos: "Videos",
+    ajustes: "Ajustes",
+    sucursales: {
+      juriquilla: "Juriquilla",
+      zibata: "Zibatá",
+      grandreserva: "Grand Reserva",
+    },
+  };
 
   function searchDataFromInput(data) {
     let filteredData = [];
@@ -33,6 +48,7 @@ function DashboardProvider({ children }) {
   return (
     <DashboardContext.Provider
       value={{
+        views,
         showNav,
         currentLocation,
         activeView,

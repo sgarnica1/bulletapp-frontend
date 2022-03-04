@@ -16,7 +16,8 @@ function Athletes() {
   const navigate = useNavigate();
   const [refetch, setRefetch] = useState(false);
   const { athletes, loading, error, actions } = useAthletes();
-  const { searchValue, setSearchValue, searchDataFromInput } = useDashboard();
+  const { searchValue, setSearchValue, searchDataFromInput, setShowNav } =
+    useDashboard();
   const data = searchDataFromInput(athletes);
 
   const onRefetch = () => setRefetch((prev) => !prev);
@@ -63,7 +64,10 @@ function Athletes() {
             />
           )}
         ></AthletesList>
-        <button className="Athletes__add-btn" onClick={() => navigate("nuevo")}>
+        <button className="Athletes__add-btn" onClick={() => {
+          navigate("nuevo")
+          setShowNav(false)
+        }}>
           +
         </button>
       </ContentContainer>

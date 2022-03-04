@@ -1,14 +1,15 @@
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navitem } from "./utils/Navitem";
 import { Dropdown } from "./utils/Dropdown";
 import { DropdownElement } from "./utils/DropdownElement";
 import "./navbar.scss";
 
 function Navbar() {
-  const { showNav, setShowNav } = useDashboard();
+  const { views, showNav, setShowNav } = useDashboard();
   const { logoutUser } = useAuth();
+  const navigation = useNavigate();
 
   return (
     <aside className={`Navbar ${showNav && "show"}`}>
@@ -24,30 +25,41 @@ function Navbar() {
         </Link>
         <div className="Navbar__content">
           <ul className="Navbar__navlist">
-            <Navitem title={"Escritorio"} path={"/"} />
+            <Navitem title={views.escritorio} path={"/"} />
             <Dropdown>
               <DropdownElement
-                title={"Juriquilla"}
+                title={views.sucursales.juriquilla}
                 path={"/sucursal/juriquilla"}
               />
-              <DropdownElement title={"Zibatá"} path={"/sucursal/zibata"} />
               <DropdownElement
-                title={"Grand Juriquilla"}
-                path={"/sucursal/grand-juriquilla"}
+                title={views.sucursales.zibata}
+                path={"/sucursal/zibata"}
+              />
+              <DropdownElement
+                title={views.sucursales.grandreserva}
+                path={"/sucursal/grand-reserva"}
               />
             </Dropdown>
-            <Navitem title={"Pagos"} path={"/pagos"} />
-            <Navitem title={"Atletas"} path={"/atletas"} />
-            <Navitem title={"Clases"} path={"/clases"} />
-            <Navitem title={"Planes"} path={"/planes"} />
+            <Navitem title={views.pagos} path={"/pagos"} />
+            <Navitem title={views.atletas} path={"/atletas"} />
+            <Navitem title={views.clases} path={"/clases"} />
+            <Navitem title={views.planes} path={"/planes"} />
 
             <h4 className="Navbar__subtitle">Recursos</h4>
-            <Navitem title={"Programación"} path={"/programacion"} />
-            <Navitem title={"Videos"} path={"/videos"} />
+            <Navitem title={views.programacion} path={"/programacion"} />
+            <Navitem title={views.videos} path={"/videos"} />
 
             <h4 className="Navbar__subtitle">Cuenta</h4>
-            <Navitem title={"Ajustes"} path={"/ajustes"} />
-            <li className="Navbar__navitem" onClick={logoutUser}>
+            <Navitem title={views.ajustes} path={"/ajustes"} />
+            <li
+              className="Navbar__navitem"
+              onClick={() =>
+                logoutUser(() => {
+                  navigation("/login");
+                  setShowNav(false);
+                })
+              }
+            >
               Salir
             </li>
           </ul>

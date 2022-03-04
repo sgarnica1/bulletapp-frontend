@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../contexts/DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
 import "./header.scss";
@@ -7,6 +8,7 @@ function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
   const { setShowNav, currentLocation: location } = useDashboard();
   const { user, logoutUser } = useAuth();
+  const navigation = useNavigate();
 
   return (
     <header className="Header">
@@ -48,7 +50,10 @@ function Header() {
                       Ajustes
                     </a>
                   </li>
-                  <li onClick={logoutUser} style={{ cursor: "pointer" }}>
+                  <li
+                    onClick={() => logoutUser(() => navigation("/login"))}
+                    style={{ cursor: "pointer" }}
+                  >
                     Salir
                   </li>
                 </ul>
