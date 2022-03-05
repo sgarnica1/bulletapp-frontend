@@ -35,7 +35,11 @@ function Athletes() {
         }
       />
       <ContentContainer>
-        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+        <SearchBar
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          loading={loading}
+        />
 
         <AthletesList
           title={"Inscripciones recientes"}
@@ -64,10 +68,13 @@ function Athletes() {
             />
           )}
         ></AthletesList>
-        <button className="Athletes__add-btn" onClick={() => {
-          navigate("nuevo")
-          setShowNav(false)
-        }}>
+        <button
+          className="Athletes__add-btn"
+          onClick={() => {
+            navigate("nuevo");
+            setShowNav(false);
+          }}
+        >
           +
         </button>
       </ContentContainer>

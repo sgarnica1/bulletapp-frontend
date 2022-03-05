@@ -1,6 +1,6 @@
 import "./search-bar.scss";
 
-function SearchBar({ searchValue, setSearchValue }) {
+function SearchBar({ searchValue, setSearchValue, loading }) {
   return (
     <form action="" className="SearchBar">
       <div className="SearchBar__input-container">
@@ -13,6 +13,7 @@ function SearchBar({ searchValue, setSearchValue }) {
           onChange={(event) => {
             setSearchValue(event.target.value);
           }}
+          disabled={loading ? true : false}
         />
       </div>
     </form>
