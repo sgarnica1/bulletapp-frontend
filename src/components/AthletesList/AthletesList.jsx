@@ -12,13 +12,16 @@ function AthletesList(props) {
   }
 
   if (props.loading) {
-    return new Array(5)
-      .fill()
-      .map((_, index) => <LoadingAthleteRow key={index} />);
+    return (
+      <div className="AthletesList__list">
+        {new Array(5).fill().map((_, index) => (
+          <LoadingAthleteRow key={index} />
+        ))}
+      </div>
+    );
   }
 
   const renderFunc = props.children ? props.children : props.render;
-
 
   return (
     <article className="AthletesList">
@@ -43,7 +46,9 @@ function AthletesList(props) {
             <p className="AthletesList__headers-title">{props.header}</p>
           </div>
         )}
-        {props.data?.length < 1 && <EmptyAthleteRow message={"No hay información registrada todavía"}/>}
+        {props.data?.length < 1 && (
+          <EmptyAthleteRow message={"No hay información registrada todavía"} />
+        )}
         {props.data?.map(renderFunc)}
       </div>
     </article>

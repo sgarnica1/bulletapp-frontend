@@ -133,6 +133,10 @@
     width: 80%;
     height: 15px;
     @extend %loading-skeleton;
+
+    @include mq(sm) {
+      max-width: 300px;
+    }
   }
 }
 
