@@ -7,6 +7,7 @@ import { Login } from "./pages/Login/Login";
 import { Home } from "./pages/Home/Home";
 import { Athletes } from "./pages/Athletes/Athletes";
 import { AddAthlete } from "./pages/AddAthlete/AddAthlete";
+import { SingleAthlete } from "./pages/SingleAthlete/SingleAthlete";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { PrivateRoute } from "./utils/PrivateRoute";
 import { LoggedOutRoute } from "./utils/LoggedOutRoute";
@@ -33,6 +34,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/atletas" element={<Athletes />} />
               <Route path="/atletas/nuevo" element={<AddAthlete />} />
+              <Route path="/atletas/:id" element={<SingleAthlete />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

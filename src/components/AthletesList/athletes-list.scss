@@ -90,6 +90,7 @@
     margin: toRem(5) toRem(10);
     border-bottom: 1px solid #dedede;
     background: $color-light;
+    color: $color-primary;
 
     &:last-of-type {
       border-bottom: 0;

@@ -6,7 +6,7 @@ import { useSchedules } from "../../hooks/useSchedules";
 import { usePlans } from "../../hooks/usePlans";
 import { useNavigate } from "react-router-dom";
 
-function AddAthleteForm() {
+function AddAthleteForm(props) {
   const { athletes, actions: athleteActions } = useAthletes();
   const { plans, getPlans } = usePlans();
   const { schedules, getSchedules } = useSchedules();
@@ -60,6 +60,7 @@ function AddAthleteForm() {
           type="text"
           placeholder="Nombre(s)"
           required
+          value={props.first_name}
           onChange={(event) => updateAthleteInfo(event, "first_name")}
         />
       </div>
@@ -69,6 +70,7 @@ function AddAthleteForm() {
           type="text"
           placeholder="Apellidos"
           required
+          value={props.last_name}
           onChange={(event) => updateAthleteInfo(event, "last_name")}
         />
       </div>
@@ -77,6 +79,7 @@ function AddAthleteForm() {
         <input
           type="email"
           placeholder="usuario@correo.com"
+          value={props.email}
           onChange={(event) => updateAthleteInfo(event, "email")}
         />
       </div>
@@ -86,6 +89,7 @@ function AddAthleteForm() {
           type="number"
           placeholder="Número de teléfono"
           required
+          value={props.phone_number}
           onChange={(event) => updateAthleteInfo(event, "phone_number")}
         />
       </div>
@@ -96,8 +100,9 @@ function AddAthleteForm() {
           onChange={(event) =>
             updateAthleteInfo(event, "plan", `${API_BASE_URL}/plans/`)
           }
+          value={props.plan?.id}
         >
-          <option value="">Selecciona un plan</option>
+          <option value={""}>Selecciona un plan</option>
           {plans &&
             plans.map((plan) => (
               <option key={plan.id} value={plan.id}>
@@ -113,6 +118,7 @@ function AddAthleteForm() {
           onChange={(event) =>
             updateAthleteInfo(event, "schedule", `${API_BASE_URL}/schedule/`)
           }
+          value={props.schedule?.id}
         >
           <option value="">Selecciona una clase</option>
           {schedules &&
@@ -142,7 +148,7 @@ function AddAthleteForm() {
       </div>
 
       <button type="submit" className="AddAthleteForm__submit-btn">
-        Añadir Atleta
+        Guardar
       </button>
     </form>
   );

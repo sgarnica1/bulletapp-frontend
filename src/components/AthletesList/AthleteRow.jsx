@@ -1,10 +1,11 @@
 import { useAthletes } from "../../hooks/useAthletes";
+import { Link } from "react-router-dom";
 
 function AthleteRow({ id, name, date, plan, params, onRefetch }) {
   const { actions } = useAthletes();
 
   return (
-    <div className="AthletesList__athlete">
+    <Link to={`/atletas/${id}`} className="AthletesList__athlete">
       <div className="AthletesList__athlete-name-container">
         <p className="AthletesList__athlete-field">{name}</p>
       </div>
@@ -19,7 +20,7 @@ function AthleteRow({ id, name, date, plan, params, onRefetch }) {
       >
         Elimiar
       </button>
-    </div>
+    </Link>
   );
 }
 

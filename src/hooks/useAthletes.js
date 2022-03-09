@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import {
   getAthletesApi,
   addAthleteApi,
+  getAthleteByIdApi,
   getAthletesByPlanApi,
   deleteAthleteApi,
 } from "../api/athletes";
@@ -37,6 +38,21 @@ const useAthletes = () => {
     }
   };
 
+  const getAthleteById = async (id) => {
+    try {
+      setLoading(true);
+      const athlete = await getAthleteByIdApi(
+        authTokens.access,
+        logoutUser,
+        id
+      );
+      setAthletes(athlete);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
   const getAthletesByPlan = async (id) => {
     try {
       setLoading(true);
@@ -60,7 +76,15 @@ const useAthletes = () => {
     }
   };
 
-  const actions = { getAthletes, addAthlete, deleteAthlete, getAthletesByPlan };
+  // const getAthletePlan = async ()
+
+  const actions = {
+    getAthletes,
+    addAthlete,
+    deleteAthlete,
+    getAthleteById,
+    getAthletesByPlan,
+  };
 
   return { athletes, loading, error, actions };
 };

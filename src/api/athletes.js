@@ -45,6 +45,21 @@ const deleteAthleteApi = async (token, callback, id) => {
   }
 };
 
+const getAthleteByIdApi = async (token, callback, id) => {
+  const endpoint = `${API_BASE_URL}/athletes/${id}/`;
+  try {
+    const res = await fetch(endpoint, fetchConfigGET(token));
+    const data = await res.json();
+
+    if (res.statusText === "Unauthorized") return callback();
+
+    return getSingleAthleteDetails(token, data);
+    // return data
+  } catch (err) {
+    throw err;
+  }
+};
+
 const getAthletesByPlanApi = async (token, callback, id) => {
   const endpoint = `${API_BASE_URL}/plans/${id}/atletas/`;
 
@@ -82,7 +97,6 @@ const fetchConfigPOST = (token, data) => ({
 const getAthleteDetails = (token, data) => {
   const updatedAthletes = data.map((athlete) => {
     athlete.created = formatDate(athlete.created);
-
     const getSchedule = fetch(athlete.schedule, fetchConfigGET(token))
       .then((response) => {
         if (response.ok) return response.json();
@@ -105,9 +119,42 @@ const getAthleteDetails = (token, data) => {
   return Promise.all(updatedAthletes).then((athletes) => athletes);
 };
 
+const getSingleAthleteDetails = async (token, data) => {
+  const athlete = await data;
+  athlete.created = formatDate(athlete.created);
+
+  const getSchedule = fetch(athlete.schedule, fetchConfigGET(token))
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw Error("Cannot fetch");
+    })
+    .then((data) => {
+      const hour = formatHour(data.hour);
+      athlete.schedule = {
+        hour: hour,
+        id: data.id,
+      };
+    });
+
+  const getPlan = fetch(athlete.plan, fetchConfigGET(token))
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw Error("Cannot fetch");
+    })
+    .then((data) => {
+      athlete.plan = {
+        name: data.name,
+        id: data.id,
+      };
+    });
+
+  return Promise.all([getSchedule, getPlan]).then(() => athlete);
+};
+
 export {
   getAthletesApi,
   addAthleteApi,
   deleteAthleteApi,
+  getAthleteByIdApi,
   getAthletesByPlanApi,
 };

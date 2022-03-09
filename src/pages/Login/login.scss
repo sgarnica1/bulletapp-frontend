@@ -28,7 +28,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     display: none;
 
     @include mq(lg) {
@@ -41,7 +41,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     padding: toRem(25);
     padding-top: toRem(50);
     position: relative;
@@ -115,6 +115,17 @@ body {
 
   &__login-btn {
     @extend %button;
+  }
+
+  &__login-btn--guest {
+    margin-bottom: toRem(30);
+    background: none;
+    border: 1px solid $color-secondary;
+    color: $color-secondary;
+  }
+
+  &__login-btn--guest:hover {
+    color: $color-dark;
   }
 
   &__privacy {

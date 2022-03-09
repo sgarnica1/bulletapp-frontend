@@ -47,6 +47,33 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginAsGuest = async (event) => {
+    event.preventDefault();
+
+    try {
+      const res = await fetch(API_BASE_URL + "/token/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "invitado",
+          password: "bulletC123!",
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAuthTokens(data);
+        setUser(jwt_decode(data.access));
+        localStorage.setItem("authTokens", JSON.stringify(data));
+      } else {
+        setErrorMessage(data.detail);
+      }
+    } catch (err) {
+      setErrorMessage("Error connecting to server");
+    }
+  };
+
   const logoutUser = (callback) => {
     setAuthTokens(null);
     setUser(null);
@@ -98,6 +125,7 @@ const AuthProvider = ({ children }) => {
         errorMessage,
         loginUser,
         logoutUser,
+        loginAsGuest,
         setErrorMessage,
       }}
     >
