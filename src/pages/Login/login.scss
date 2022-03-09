@@ -1,5 +1,4 @@
 @import "../../scss/global";
-@import "../../scss/config";
 @import "../../scss/mixin";
 
 body {
@@ -49,6 +48,8 @@ body {
 
     @include mq(lg) {
       justify-content: center;
+      padding: 0;
+      padding-top: toRem(10);
     }
   }
 
