@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(userExist);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loggingIn, setLoggingIn] = useState(false);
 
   const loginUser = async (event) => {
     event.preventDefault();
@@ -49,6 +50,7 @@ const AuthProvider = ({ children }) => {
 
   const loginAsGuest = async (event) => {
     event.preventDefault();
+    setLoggingIn(true);
 
     try {
       const res = await fetch(API_BASE_URL + "/token/", {
@@ -66,6 +68,7 @@ const AuthProvider = ({ children }) => {
         setAuthTokens(data);
         setUser(jwt_decode(data.access));
         localStorage.setItem("authTokens", JSON.stringify(data));
+        setLoggingIn(false);
       } else {
         setErrorMessage(data.detail);
       }
@@ -122,6 +125,7 @@ const AuthProvider = ({ children }) => {
       value={{
         user,
         authTokens,
+        loggingIn,
         errorMessage,
         loginUser,
         logoutUser,
