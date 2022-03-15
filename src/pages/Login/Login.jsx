@@ -5,7 +5,7 @@ import "./login.scss";
 
 function Login() {
   const [passInputType, setPassInputType] = useState("password");
-  const { loginUser, loginAsGuest, loggingIn, errorMessage, setErrorMessage } =
+  const { loginUser, loginAsGuest, loggingIn, loggingInAsGuest, errorMessage, setErrorMessage } =
     useAuth();
 
   return (
@@ -63,14 +63,14 @@ function Login() {
               Recuperar contraseña
             </a>
 
-            <button className="Login__login-btn">Ingresa</button>
+            <button className="Login__login-btn">{!loggingIn ? "Ingresar" : "Iniciando sesión..."}</button>
           </div>
         </form>
         <button
           className="Login__login-btn Login__login-btn--guest"
           onClick={loginAsGuest}
         >
-          {!loggingIn ? "Ingresar como invitado" : "Iniciando sesión..."}
+          {!loggingInAsGuest ? "Ingresar como invitado" : "Iniciando sesión..."}
         </button>
         {/* <a href="/" className="Login__privacy">
           Aviso de privacidad

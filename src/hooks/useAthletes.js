@@ -5,6 +5,7 @@ import {
   addAthleteApi,
   getAthleteByIdApi,
   getAthletesByPlanApi,
+  updateAthleteApi,
   deleteAthleteApi,
 } from "../api/athletes";
 
@@ -15,10 +16,14 @@ const useAthletes = () => {
 
   const { authTokens, logoutUser } = useAuth();
 
-  const getAthletes = async () => {
+  const getAthletes = async (abortCont) => {
     try {
       setLoading(true);
-      const res = await getAthletesApi(authTokens.access, logoutUser);
+      const res = await getAthletesApi(
+        authTokens.access,
+        logoutUser,
+        abortCont
+      );
       setAthletes(res);
       setLoading(false);
     } catch (err) {
@@ -65,6 +70,17 @@ const useAthletes = () => {
     }
   };
 
+  const updateAthlete = async (bodyData, id, callback) => {
+    try {
+      setLoading(true);
+      await updateAthleteApi(bodyData, authTokens.access, callback, id);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
   const deleteAthlete = async (id, callback) => {
     try {
       setLoading(true);
@@ -76,11 +92,10 @@ const useAthletes = () => {
     }
   };
 
-  // const getAthletePlan = async ()
-
   const actions = {
     getAthletes,
     addAthlete,
+    updateAthlete,
     deleteAthlete,
     getAthleteById,
     getAthletesByPlan,

@@ -1,51 +1,48 @@
-import "./addathlete-form.scss";
+import "./athlete-form.scss";
 import { API_BASE_URL } from "../../utils/requests";
 import { useEffect, useState } from "react";
 import { useAthletes } from "../../hooks/useAthletes";
 import { useSchedules } from "../../hooks/useSchedules";
 import { usePlans } from "../../hooks/usePlans";
-import { useNavigate } from "react-router-dom";
 
-function AddAthleteForm(props) {
+function EditAthleteForm(props) {
   const { athletes, actions: athleteActions } = useAthletes();
   const { plans, getPlans } = usePlans();
   const { schedules, getSchedules } = useSchedules();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // const abortCont = new AbortController();
-    athleteActions.getAthletes();
+    const abortCont = new AbortController();
+    athleteActions.getAthletes(abortCont);
     getPlans();
     getSchedules();
-    // return () => abortCont.abort();
+    return () => abortCont.abort();
   }, []);
 
-  const [athlete, setAthlete] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone_number: "",
-    plan: "",
-    schedule: "",
-    beneficiary: "",
-  });
-
-  function updateAthleteInfo(event, attribute, endpoint) {
-    setAthlete((athlete) => {
-      if (endpoint) {
-        athlete[attribute] = endpoint + event.target.value + "/";
-      } else {
-        athlete[attribute] = event.target.value;
-      }
-      return athlete;
-    });
-  }
+  const [firstName, setFirstName] = useState(props.first_name);
+  const [lastName, setLastName] = useState(props.last_name);
+  const [email, setEmail] = useState(props.email);
+  const [phoneNumber, setPhoneNumber] = useState(props.phone_number);
+  const [plan, setPlan] = useState(props.plan.id);
+  const [schedule, setSchedule] = useState(props.schedule.id);
+  const [beneficiary, setBeneficiary] = useState(
+    props.beneficiary ? props.beneficiary.id : ""
+  );
 
   function handleSubmitData(event) {
     event.preventDefault();
-    athleteActions.addAthlete(athlete, () => {
-      navigate("/atletas");
-    });
+
+    let athlete = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone_number: phoneNumber,
+      plan: `${API_BASE_URL}/plans/${plan}/`,
+      schedule: `${API_BASE_URL}/schedule/${schedule}/`,
+      beneficiary:
+        beneficiary === "" ? "" : `${API_BASE_URL}/athletes/${beneficiary}/`,
+    };
+
+    athleteActions.updateAthlete(athlete, props.id, props.onRefetch);
   }
 
   return (
@@ -60,8 +57,8 @@ function AddAthleteForm(props) {
           type="text"
           placeholder="Nombre(s)"
           required
-          value={props.first_name}
-          onChange={(event) => updateAthleteInfo(event, "first_name")}
+          value={firstName}
+          onChange={(event) => setFirstName(event.target.value)}
         />
       </div>
       <div className="AddAthleteForm__input-container">
@@ -70,8 +67,8 @@ function AddAthleteForm(props) {
           type="text"
           placeholder="Apellidos"
           required
-          value={props.last_name}
-          onChange={(event) => updateAthleteInfo(event, "last_name")}
+          value={lastName}
+          onChange={(event) => setLastName(event.target.value)}
         />
       </div>
       <div className="AddAthleteForm__input-container">
@@ -79,8 +76,8 @@ function AddAthleteForm(props) {
         <input
           type="email"
           placeholder="usuario@correo.com"
-          value={props.email}
-          onChange={(event) => updateAthleteInfo(event, "email")}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
         />
       </div>
       <div className="AddAthleteForm__input-container">
@@ -89,18 +86,16 @@ function AddAthleteForm(props) {
           type="number"
           placeholder="Número de teléfono"
           required
-          value={props.phone_number}
-          onChange={(event) => updateAthleteInfo(event, "phone_number")}
+          value={phoneNumber}
+          onChange={(event) => setPhoneNumber(event.target.value)}
         />
       </div>
       <div className="AddAthleteForm__input-container">
         <label htmlFor="plan">Plan</label>
         <select
           required
-          onChange={(event) =>
-            updateAthleteInfo(event, "plan", `${API_BASE_URL}/plans/`)
-          }
-          value={props.plan?.id}
+          onChange={(event) => setPlan(event.target.value)}
+          value={plan}
         >
           <option value={""}>Selecciona un plan</option>
           {plans &&
@@ -115,10 +110,8 @@ function AddAthleteForm(props) {
         <label htmlFor="group">Clase</label>
         <select
           required
-          onChange={(event) =>
-            updateAthleteInfo(event, "schedule", `${API_BASE_URL}/schedule/`)
-          }
-          value={props.schedule?.id}
+          onChange={(event) => setSchedule(event.target.value)}
+          value={schedule}
         >
           <option value="">Selecciona una clase</option>
           {schedules &&
@@ -133,9 +126,8 @@ function AddAthleteForm(props) {
       <div className="AddAthleteForm__input-container">
         <label htmlFor="group">Beneficiario (opcional)</label>
         <select
-          onChange={(event) =>
-            updateAthleteInfo(event, "beneficiary", `${API_BASE_URL}/athletes/`)
-          }
+          onChange={(event) => setBeneficiary(event.target.value)}
+          value={beneficiary}
         >
           <option value="">Selecciona un atleta</option>
           {athletes &&
@@ -148,10 +140,10 @@ function AddAthleteForm(props) {
       </div>
 
       <button type="submit" className="AddAthleteForm__submit-btn">
-        Guardar
+        Guardar cambios
       </button>
     </form>
   );
 }
 
-export { AddAthleteForm };
+export { EditAthleteForm };

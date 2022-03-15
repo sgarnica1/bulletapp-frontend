@@ -20,9 +20,11 @@ const AuthProvider = ({ children }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loggingIn, setLoggingIn] = useState(false);
+  const [loggingInAsGuest, setLoggingInAsGuest] = useState(false);
 
   const loginUser = async (event) => {
     event.preventDefault();
+    setLoggingIn(true);
 
     try {
       const res = await fetch(API_BASE_URL + "/token/", {
@@ -40,17 +42,20 @@ const AuthProvider = ({ children }) => {
         setAuthTokens(data);
         setUser(jwt_decode(data.access));
         localStorage.setItem("authTokens", JSON.stringify(data));
+        setLoggingIn(false);
       } else {
         setErrorMessage(data.detail);
+        setLoggingIn(false);
       }
     } catch (err) {
       setErrorMessage("Error connecting to server");
+      setLoggingIn(false);
     }
   };
 
   const loginAsGuest = async (event) => {
     event.preventDefault();
-    setLoggingIn(true);
+    setLoggingInAsGuest(true);
 
     try {
       const res = await fetch(API_BASE_URL + "/token/", {
@@ -68,7 +73,7 @@ const AuthProvider = ({ children }) => {
         setAuthTokens(data);
         setUser(jwt_decode(data.access));
         localStorage.setItem("authTokens", JSON.stringify(data));
-        setLoggingIn(false);
+        setLoggingInAsGuest(false);
       } else {
         setErrorMessage(data.detail);
       }
@@ -126,6 +131,7 @@ const AuthProvider = ({ children }) => {
         user,
         authTokens,
         loggingIn,
+        loggingInAsGuest,
         errorMessage,
         loginUser,
         logoutUser,

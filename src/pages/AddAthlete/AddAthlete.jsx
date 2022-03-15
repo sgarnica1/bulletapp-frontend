@@ -1,6 +1,6 @@
 import { ContentContainer } from "../../components/ContentContainer/ContentContainer";
 import { Banner } from "../../components/Banner/Banner";
-import { AddAthleteForm } from "../../components/AddAthleteForm/AddAthleteForm";
+import { AddAthleteForm } from "../../components/AthleteForm/AddAthleteForm";
 
 import "./addathlete.scss";
 
@@ -9,7 +9,7 @@ function AddAthlete() {
     <div className="AddAthlete">
       <Banner title={"Añadir Atletas"} description={"Agrega un nuevo atleta"} />
       <ContentContainer>
-        <AddAthleteForm />
+        <AddAthleteForm submitMethod={"post"} />
       </ContentContainer>
     </div>
   );

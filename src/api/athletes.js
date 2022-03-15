@@ -1,9 +1,12 @@
 import { API_BASE_URL } from "../utils/requests";
 import { formatHour, formatDate } from "../utils/utils";
 
-const getAthletesApi = async (token, callback) => {
+const getAthletesApi = async (token, callback, abortCont) => {
   try {
-    const res = await fetch(API_BASE_URL + "/athletes/", fetchConfigGET(token));
+    const res = await fetch(
+      API_BASE_URL + "/athletes/",
+      fetchConfigGET(token, abortCont)
+    );
     const data = await res.json();
 
     if (res.statusText === "Unauthorized") return callback();
@@ -30,6 +33,20 @@ const addAthleteApi = async (bodyData, token, callback, signal) => {
   }
 };
 
+const updateAthleteApi = async (bodyData, token, callback, id) => {
+  const endpoint = `${API_BASE_URL}/athletes/${id}/`;
+  try {
+    const res = await fetch(endpoint, fetchConfigPUT(token, bodyData));
+    console.log(res);
+    const data = await res.json();
+    console.log(data);
+    callback();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const deleteAthleteApi = async (token, callback, id) => {
   const endpoint = `${API_BASE_URL}/athletes/${id}/`;
   try {
@@ -45,7 +62,7 @@ const deleteAthleteApi = async (token, callback, id) => {
   }
 };
 
-const getAthleteByIdApi = async (token, callback, id) => {
+const getAthleteByIdApi = async (token, callback, id,) => {
   const endpoint = `${API_BASE_URL}/athletes/${id}/`;
   try {
     const res = await fetch(endpoint, fetchConfigGET(token));
@@ -56,6 +73,7 @@ const getAthleteByIdApi = async (token, callback, id) => {
     return getSingleAthleteDetails(token, data);
     // return data
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };
@@ -77,16 +95,37 @@ const getAthletesByPlanApi = async (token, callback, id) => {
 
 // UTILS`
 
-const fetchConfigGET = (token) => ({
-  method: "GET",
+const fetchConfigGET = (token, abortCont) => {
+  if (abortCont) {
+    return {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(token),
+      },
+      signal: abortCont,
+    };
+  }
+  return {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + String(token),
+    },
+  };
+};
+
+const fetchConfigPOST = (token, data) => ({
+  method: "POST",
+  body: JSON.stringify(data),
   headers: {
     "Content-Type": "application/json",
     Authorization: "Bearer " + String(token),
   },
 });
 
-const fetchConfigPOST = (token, data) => ({
-  method: "POST",
+const fetchConfigPUT = (token, data) => ({
+  method: "PUT",
   body: JSON.stringify(data),
   headers: {
     "Content-Type": "application/json",
@@ -148,12 +187,28 @@ const getSingleAthleteDetails = async (token, data) => {
       };
     });
 
+  if (athlete.beneficiary) {
+    const getBeneficiary = fetch(athlete.beneficiary, fetchConfigGET(token))
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw Error("Cannot fetch");
+      })
+      .then((data) => {
+        athlete.beneficiary = data;
+      })
+      .catch((err) => console.log(err));
+    return Promise.all([getSchedule, getPlan, getBeneficiary]).then(
+      () => athlete
+    );
+  }
+
   return Promise.all([getSchedule, getPlan]).then(() => athlete);
 };
 
 export {
   getAthletesApi,
   addAthleteApi,
+  updateAthleteApi,
   deleteAthleteApi,
   getAthleteByIdApi,
   getAthletesByPlanApi,
