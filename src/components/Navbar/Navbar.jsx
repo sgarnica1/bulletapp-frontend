@@ -19,7 +19,7 @@ function Navbar() {
       <nav className="Navbar__container">
         <Link to={"/"} className="Navbar__logo">
           <img
-            src="https://images.bulletcrossfit.com/img/logo_white_resized.png"
+            src="./assets/logo_white_resized.png"
             alt="Logo Bullet CrossFit"
           />
         </Link>

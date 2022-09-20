@@ -40,7 +40,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     display: inline-block;
-    background: url("https://images.bulletcrossfit.com/icon/hamburger.svg");
+    background: url("../../assets/icon/hamburger.svg");
   }
 
   &__nav-container {
@@ -64,7 +64,7 @@
     &__icon {
       width: 22px;
       height: 22px;
-      background: url("https://images.bulletcrossfit.com/icon/location.svg");
+      background: url("../../assets/icon/location.svg");
       @extend %icon;
     }
 
@@ -107,7 +107,7 @@
       &-icon {
         height: 18px;
         width: 18px;
-        background: url("https://images.bulletcrossfit.com/icon/caret-down-solid.svg");
+        background: url("../../assets/icon/dropdown-inactive.svg");
         @extend %icon;
       }
     }

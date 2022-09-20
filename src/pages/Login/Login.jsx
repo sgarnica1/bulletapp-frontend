@@ -14,11 +14,10 @@ function Login() {
       <main className="Login__main">
         <header className="Login__header">
           <img
-            src="https://images.bulletcrossfit.com/img/logo_white_resized.png"
+            src="./assets/logo_white_resized.png"
             alt="Bullet CrossFit Logo"
             className="Login__header-logo"
           />
-          <h1 className="Login__header-title">Bienvenido</h1>
         </header>
         <form
           autoComplete="off"
@@ -70,11 +69,11 @@ function Login() {
           className="Login__login-btn Login__login-btn--guest"
           onClick={loginAsGuest}
         >
-          {!loggingInAsGuest ? "Ingresar como invitado" : "Iniciando sesión..."}
+          {!loggingInAsGuest ? "Ingresa sin contraseña" : "Iniciando sesión..."}
         </button>
-        {/* <a href="/" className="Login__privacy">
+        <a href="/" className="Login__privacy">
           Aviso de privacidad
-        </a> */}
+        </a>
       </main>
     </div>
   );

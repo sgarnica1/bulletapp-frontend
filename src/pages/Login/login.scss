@@ -23,7 +23,7 @@ body {
   }
 
   &__background-img {
-    background: url("https://images.bulletcrossfit.com/img/bullet-crossfit-gym.jpg");
+    background: url("../../assets/img/bullet-crossfit-gym.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -82,14 +82,14 @@ body {
     height: toRem(20);
     width: toRem(20);
     cursor: pointer;
-    background: url("https://images.bulletcrossfit.com/icon/invisible.svg");
+    background: url("../../assets/icon/invisible.svg");
     @extend %icon;
     position: absolute;
     bottom: 10px;
   }
 
   .password-toggle.visible {
-    background: url("https://images.bulletcrossfit.com/icon/visible.svg");
+    background: url("../../assets/icon/visible.svg");
   }
 
   &__input:focus-within {
